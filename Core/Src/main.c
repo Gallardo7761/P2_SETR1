@@ -142,21 +142,41 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  int counter = 0, state = 0;
   while (1)
   {
     /* USER CODE END WHILE */
-	moveToXY(1,7); //sitúa el cursor en la posición fila 1 columna 7, primer muñeco
-	lcd_write(0,1); //escribe el nuevo patrón 0 en la DDRAM
-	moveToXY(1,8); //sitúa el cursor en la posición fila 1 columna 8, segundo muñeco
-	lcd_write(0,1);
-	HAL_Delay(1000); //retraso de 1 segundo para dejar ver la figura en pantalla
 
-	moveToXY(1,7);
-	lcd_write(1,1); //escribe el nuevo patrón 0 en la DDRAM
-	moveToXY(1,8);
-	lcd_write(1,1);
-	HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
+	counter++;
+	if (counter == 10 && state == 0)
+	{
+		moveToXY(1,7); //sitúa el cursor en la posición fila 1 columna 7, primer muñeco
+		lcd_write(0,1); //escribe el nuevo patrón 0 en la DDRAM
+		moveToXY(1,8); //sitúa el cursor en la posición fila 1 columna 8, segundo muñeco
+		lcd_write(0,1);
+
+		counter = 0;
+		state = 1;
+	}
+
+	if (counter == 10 && state == 1)
+	{
+		moveToXY(1,7);
+		lcd_write(1,1); //escribe el nuevo patrón 0 en la DDRAM
+		moveToXY(1,8);
+		lcd_write(1,1);
+
+		counter = 0;
+		state = 0;
+	}
+
+	if (LL_GPIO_IsInputPinSet(BUTTON_EXTI13_GPIO_Port, BUTTON_EXTI13_Pin))
+		LL_GPIO_SetOutputPin(LED2_GPIO_Port, LED2_Pin);
+	else
+		LL_GPIO_ResetOutputPin(LED2_GPIO_Port, LED2_Pin);
+
+	HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }
