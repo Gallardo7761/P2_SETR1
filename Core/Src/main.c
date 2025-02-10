@@ -149,7 +149,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-	// TAREA a
+	// TAREA A
     counter++;
 	if (counter == 10 && state == 0)
 	{
@@ -173,7 +173,7 @@ int main(void)
 		state = 0;
 	}
 
-	// TAREA b
+	// TAREA B
 	if (LL_GPIO_IsInputPinSet(BUTTON_EXTI13_GPIO_Port, BUTTON_EXTI13_Pin))
 		LL_GPIO_SetOutputPin(LED2_GPIO_Port, LED2_Pin);
 	else
