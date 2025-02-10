@@ -119,7 +119,25 @@ int main(void)
   lcd_display_settings(1,0,0);
   lcd_clear();
 
-  lcd_print("Hola mundo");
+  lcd_cgram_address(0); // se selecciona la dirección 0 de la CGRAM, patrón con código 0
+  lcd_write(0x15, 1); //se va cargando con los bytes del patrón de cada fila de la CGRAM
+  lcd_write(0x15, 1);
+  lcd_write(0xe, 1);
+  lcd_write(0x4, 1);
+  lcd_write(0x4, 1);
+  lcd_write(0xa, 1);
+  lcd_write(0x11, 1);
+  lcd_write(0x00, 1);
+  lcd_cgram_address(8); //se selecciona la dirección 8 de la CGRAM, patrón con código 1
+  lcd_write(0x4, 1); // se va cargando con los bytes del patrón de cada fila de la CGRAM
+  lcd_write(0x4, 1);
+  lcd_write(0xe, 1);
+  lcd_write(0x15, 1);
+  lcd_write(0x15, 1);
+  lcd_write(0xa, 1);
+  lcd_write(0xa, 1);
+  lcd_write(0x00, 1);
+  lcd_display_address(0); //Vuelve a direccionar la DDRAM para visualizar datos en pantalla
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -127,7 +145,17 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+	moveToXY(1,7); //sitúa el cursor en la posición fila 1 columna 7, primer muñeco
+	lcd_write(0,1); //escribe el nuevo patrón 0 en la DDRAM
+	moveToXY(1,8); //sitúa el cursor en la posición fila 1 columna 8, segundo muñeco
+	lcd_write(0,1);
+	HAL_Delay(1000); //retraso de 1 segundo para dejar ver la figura en pantalla
 
+	moveToXY(1,7);
+	lcd_write(1,1); //escribe el nuevo patrón 0 en la DDRAM
+	moveToXY(1,8);
+	lcd_write(1,1);
+	HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
